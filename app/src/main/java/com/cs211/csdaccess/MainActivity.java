@@ -17,7 +17,7 @@ import java.io.File;
 
 public class MainActivity extends ActionBarActivity {
 
-    Button btn_change, btn_backup;
+    Button btn_change, btn_backup, btn_check;
     TextView tv_mac;
     EditText et_mac;
 
@@ -52,6 +52,7 @@ public class MainActivity extends ActionBarActivity {
         // Init layout
         btn_change = (Button) findViewById(R.id.btn_change);
         btn_backup = (Button) findViewById(R.id.btn_backup);
+        btn_check = (Button) findViewById(R.id.btn_check);
         tv_mac = (TextView) findViewById(R.id.tv_mac);
         et_mac = (EditText) findViewById(R.id.et_mac);
 
@@ -82,6 +83,14 @@ public class MainActivity extends ActionBarActivity {
                 tv_mac.setText(mac);
             }
         });
+        btn_check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String mac = Util.getMac(getApplicationContext());
+                tv_mac.setText(mac);
+            }
+        });
+
     }
 
     @Override
