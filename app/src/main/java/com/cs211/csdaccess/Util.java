@@ -18,6 +18,8 @@ import android.net.Uri;
 
 /**
  * Created by Administrator on 2015/5/31.
+ * // Run external binary reference: http://stackoverflow.com/questions/5583487/hosting-an-executable-within-android-application
+ * // The runcommand function and getassetsfile function: https://github.com/carmenloklok/ChangeMac
  */
 public class Util {
     // path of busybox
@@ -30,8 +32,7 @@ public class Util {
         BUSYBOX_PATH = "/data/data/com.cs211.csdaccess/busybox";
     }
 
-    public static int getassetsfile(Context context, String fileName,
-                                    File tagFile) {
+    public static int getassetsfile(Context context, String fileName,File tagFile) {
         int retVal = 0;
         try {
             InputStream in = context.getAssets().open(fileName);
@@ -52,6 +53,7 @@ public class Util {
         }
         return retVal;
     }
+
     public static String getMac(Context context) {
         //String[] results = runCommand("ls");
         String[] results = runCommand(BUSYBOX_PATH + " iplink show wlan0");
