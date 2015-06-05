@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.io.File;
 
 // SMS send reference: http://stackoverflow.com/questions/4967448/send-sms-in-android
+// SMS send reference: http://javapapers.com/android/android-send-sms-tutorial/
 
 public class MainActivity extends ActionBarActivity {
 
@@ -139,7 +140,16 @@ public class MainActivity extends ActionBarActivity {
     }
     public void sendSMS(String phoneNumber, String message)
     {
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, null, null);
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+            Toast.makeText(getApplicationContext(), "SMS sent.",
+                    Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),
+                    "Sending SMS failed.",
+                    Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 }
