@@ -112,4 +112,21 @@
         android:layout_alignLeft="@+id/et_mac"
         android:layout_alignStart="@+id/et_mac"
         android:text="3105927223" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CSD Access"
+        android:id="@+id/textView3"
+        android:textSize="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/et_mac"
+        android:layout_alignStart="@+id/et_mac"
+        android:layout_marginTop="25dp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="70dp" />
 </RelativeLayout>

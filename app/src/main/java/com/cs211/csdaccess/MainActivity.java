@@ -1,7 +1,12 @@
 package com.cs211.csdaccess;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -18,6 +23,7 @@ import java.io.File;
 
 // SMS send reference: http://stackoverflow.com/questions/4967448/send-sms-in-android
 // SMS send reference: http://javapapers.com/android/android-send-sms-tutorial/
+// Intent reference: http://stackoverflow.com/questions/3122564/how-can-i-notify-a-running-activity-from-a-broadcast-receiver
 
 public class MainActivity extends ActionBarActivity {
 
@@ -35,10 +41,40 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         inst = this;
+        // Start components in UI
         initComponents();
+        // Check true mac
         initCheckMac();
+        // Register receiver for MACServer
+        registerReciever();
+        // Start service and pass it the true mac
+        if (true_mac.length() != 0) {
+            initMacServer(true_mac);
+        }
+    }
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("com.cs211.csdaccess")) {
+                String new_mac = intent.getStringExtra("new_mac");
+                et_mac.setText(new_mac);
+            }
+            Toast.makeText(getApplicationContext(), "Received MAC address", Toast.LENGTH_LONG).show();
+        }
+    };
+    private void registerReciever() {
+        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.cs211.csdaccess");
+        broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
     }
 
+    private void initMacServer(String true_mac) {
+        Context context = getApplicationContext();
+        Intent i = new Intent(context, MACServer.class);
+        i.putExtra("true_mac", true_mac);
+        context.startService(i);
+    }
     private void initCheckMac(){
         Util.init(getApplicationContext());
         //tv_mac.setText(Util.BUSYBOX_PATH);
@@ -68,6 +104,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Set default mac
         et_mac.setText(authenticate_mac);
+
 
         // Onclick listener
         btn_change.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +149,15 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+        btn_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                String phoneNumber = et_phone.getText().toString();
+                if (phoneNumber.length() == 10) {
+                    sendSMS(phoneNumber, "Request MAC");
+                }
+            }
+        });
     }
 
     @Override
@@ -152,4 +198,6 @@ public class MainActivity extends ActionBarActivity {
             e.printStackTrace();
         }
     }
+
+
 }
