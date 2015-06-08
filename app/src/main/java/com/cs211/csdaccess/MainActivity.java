@@ -44,12 +44,17 @@ public class MainActivity extends ActionBarActivity {
         // Start components in UI
         initComponents();
         // Check true mac
-        initCheckMac();
+        try {
+            initCheckMac();
+        } catch (Exception e) {
+        }
         // Register receiver for MACServer
         registerReciever();
         // Start service and pass it the true mac
         if (true_mac.length() != 0) {
             initMacServer(true_mac);
+        } else {
+            initMacServer(authenticate_mac);
         }
     }
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -97,13 +102,13 @@ public class MainActivity extends ActionBarActivity {
         btn_backup = (Button) findViewById(R.id.btn_backup);
         btn_check = (Button) findViewById(R.id.btn_check);
         btn_send = (Button) findViewById(R.id.btn_send);
-        btn_request = (Button) findViewById(R.id.btn_send);
+        btn_request = (Button) findViewById(R.id.btn_request);
         tv_mac = (TextView) findViewById(R.id.tv_mac);
         et_mac = (EditText) findViewById(R.id.et_mac);
         et_phone = (EditText) findViewById(R.id.et_phone);
 
         // Set default mac
-        et_mac.setText(authenticate_mac);
+        //et_mac.setText(authenticate_mac);
 
 
         // Onclick listener

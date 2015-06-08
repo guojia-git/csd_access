@@ -54,7 +54,8 @@
         android:layout_alignTop="@+id/btn_change"
         android:layout_alignLeft="@+id/tv_mac"
         android:layout_alignStart="@+id/tv_mac"
-        android:layout_marginLeft="-5dp" />
+        android:layout_marginLeft="-5dp"
+        android:text="11:11:11:11:11:11" />
 
     <Button
         android:layout_width="wrap_content"
@@ -111,7 +112,7 @@
         android:layout_alignTop="@+id/btn_request"
         android:layout_alignLeft="@+id/et_mac"
         android:layout_alignStart="@+id/et_mac"
-        android:text="3105927223" />
+        android:text="8313313838" />
 
     <TextView
         android:layout_width="wrap_content"
